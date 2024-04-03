@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   warnings:
-  
     runs-on: ubuntu-latest
 
     steps:
@@ -18,8 +17,8 @@ jobs:
     - name: Dependencies
       run: dotnet restore
 
-    - name: Install Roslyn Analyzers
-      run: dotnet add ApiChessClub.csproj package Microsoft.CodeAnalysis.NetAnalyzers
+    - name: Install SonarLint Analyzers
+      run: dotnet add ApiChessClub.csproj package SonarAnalyzer.CSharp
 
-    - name: Build with RA
+    - name: Build with SA
       run: dotnet build --no-restore -c Release
