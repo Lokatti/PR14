@@ -1,31 +1,22 @@
-name: ASP.NET CI
+name: Check Code Style CI
 
 on: [push, pull_request]
 
 jobs:
-  check:
+  code-style-check:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
 
-    - name: Dependencies
+    - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build project
-      run: dotnet build --no-restore -c Release
-
-    - name: Test api project
-      run: dotnet test --no-build -c Release --verbosity normal
-
-    - name: Global instruments
-      run: dotnet tool install --global dotnet-reportgenerator-globaltool
-
-    - name: Run pipe for project
-      run: dotnet build /p:RunCodeAnalysis=true
+    - name: Check Code Style
+      run: dotnet format --check --verbosity diagnostic
