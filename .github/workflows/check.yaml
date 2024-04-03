@@ -1,22 +1,24 @@
-name: Check Code Style CI
+name: C# Syntax Check CI
 
 on: [push, pull_request]
 
 jobs:
-  code-style-check:
+  warnings:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    - name: Setup .NET
+    - name: Setup
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x'
 
-    - name: Restore dependencies
+    - name: Dependencies
       run: dotnet restore
 
-    - name: Check Code Style
-      run: dotnet format --check --verbosity diagnostic
+    - name: Install Roslyn Analyzers
+      run: dotnet add ApiChessClub/ApiChessClub.csproj package Microsoft.CodeAnalysis.NetAnalyzers
+
+    - name: Build with RA
+      run: dotnet build --no-restore -c Release
