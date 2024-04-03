@@ -18,7 +18,7 @@ jobs:
       run: dotnet restore
 
     - name: Install Roslyn Analyzers
-      run: dotnet add ApiChessClub/ApiChessClub.csproj package Microsoft.CodeAnalysis.NetAnalyzers
+      run: dotnet add ApiChessClub.csproj package Microsoft.CodeAnalysis.NetAnalyzers
 
     - name: Build with RA
       run: dotnet build --no-restore -c Release
